@@ -16,7 +16,6 @@ parser.add_argument('-t', '--tagfile', default="user_tags.txt",
 args = parser.parse_args()
 
 print(args.source, args.destination, args.tagfile)
-Point = namedtuple('Point', ['x', 'y'])
 Filter = namedtuple('Filter', ['id', 'description', 'value'])
 
 # Other filepaths for testing
@@ -28,11 +27,6 @@ Filter = namedtuple('Filter', ['id', 'description', 'value'])
 ds = pydicom.dcmread(args.source)
 
 path = Path(args.source)
-
-# TODO Add argparse to handle:
-# 1. Input filename or file directory
-# 2. Output filename or file directory
-# 3. Location of user tags or void to use default list
 
 # TODO Add logging function
 # TODO Use Path properly
