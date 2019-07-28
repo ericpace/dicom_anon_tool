@@ -9,7 +9,6 @@ def generate_tags(user_list):
         line = Filter(*line.split("\t"))
         tag = Tag([int(x, 16) for x in line.id.split(",")])  # Convert hex to int and get Tag
         tags[tag] = line.value
-        # print(ds[tag].value)
     return tags
 
 
@@ -20,7 +19,7 @@ def anonymise(ds, tags):
             value_new = tags[tag]
 
             print(f"{tag}: Found (replacing {value_cur} with {value_new})")
-            # ds[tag].value = value_new
+            ds[tag].value = value_new
         except KeyError:
             print(f"{tag}: Not found (KeyError)")
         except AttributeError:
