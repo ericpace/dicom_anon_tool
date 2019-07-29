@@ -4,11 +4,12 @@ from pydicom.tag import Tag
 from collections import namedtuple
 from pathlib import Path
 import logging
+from datetime import datetime
 
 
 Filter = namedtuple('Filter', ['id', 'description', 'value'])
 
-ANON_LOG_FILE = "info.log"
+ANON_LOG_FILE = f"{datetime.today().strftime('%Y-%m-%d_%H.%M')}.log"
 logging.basicConfig(filename=ANON_LOG_FILE,
                     filemode='a',
                     format='%(asctime)s %(levelname)s \t %(message)s',
