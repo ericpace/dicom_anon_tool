@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 import os
 import argparse
 from collections import namedtuple
@@ -13,8 +15,8 @@ from pathlib import Path
 
 
 parser = argparse.ArgumentParser(description='Anonymise DICOM images')
-parser.add_argument('source', metavar='S', type=str,
-                    help='location of dicom file to anonymise')
+parser.add_argument('source', type=str,
+                    help='location of dicom file or folder to anonymise')
 # parser.add_argument('-d', '--destination',
 #                     help='location where to save anonymised DICOM file')
 parser.add_argument('-t', '--tagfile', default="user_tags.txt",
