@@ -9,7 +9,7 @@ from datetime import datetime
 
 Filter = namedtuple('Filter', ['id', 'description', 'value'])
 
-ANON_LOG_FILE = f"{datetime.today().strftime('%Y-%m-%d_%H.%M')}.log"
+ANON_LOG_FILE = f"{datetime.today().strftime('%Y-%m-%d_%H')}.log"
 logging.basicConfig(filename=ANON_LOG_FILE,
                     filemode='a',
                     format='%(asctime)s %(levelname)s \t %(message)s',
@@ -28,11 +28,10 @@ def generate_tags(user_list):
 
 def load_dicom_file(filepath):
     try:
-        ds = pydicom.dcmread(os.path.join(filepath))
+        return pydicom.dcmread(os.path.join(filepath))
     except pydicom.errors.InvalidDicomError:
-        print("invalid DICOM")
         logging.error("Invalid DICOM")
-    return ds
+        return None
 
 
 def anonymise(ds, tags):
@@ -41,14 +40,11 @@ def anonymise(ds, tags):
             value_cur = ds[tag].value
             value_new = tags[tag]
 
-            print(f"{tag}: Found (replacing {value_cur} with {value_new})")
             logging.info(f"{tag}: Found (replacing {value_cur} with {value_new})")
             ds[tag].value = value_new
         except KeyError:
-            print(f"{tag}: Not found (KeyError)")
             logging.error(f"{tag}: Not found (KeyError)")
         except AttributeError:
-            print(f"{tag}: Not found (AttributeError)")
             logging.error(f"{tag}: Not found (AttributeError)")
 
     return ds
@@ -57,13 +53,14 @@ def anonymise(ds, tags):
 def start(filepath, tags):
     f = Path(filepath)
     ds = load_dicom_file(filepath)
-    print(f"Opened file: {f}")
-    logging.info(f"Opened file: {f}")
 
-    ds_anon = anonymise(ds, tags)
+    if ds:
+        print(f"Open file: {f}")
+        logging.info(f"Opened file: {f}")
+        ds_anon = anonymise(ds, tags)
 
-    # TODO handle better
-    savefile = os.path.join(f.parent, f"{f.stem}_anon.dcm")
-    ds_anon.save_as(savefile)
-    print(f"Saved file: {savefile}")
-    logging.info(f"Saved file: {savefile}")
+        # TODO handle better
+        savefile = os.path.join(f.parent, f"{f.stem}_anon.dcm")
+        ds_anon.save_as(savefile)
+        print(f"Save file: {savefile}")
+        logging.info(f"Saved file: {savefile}")

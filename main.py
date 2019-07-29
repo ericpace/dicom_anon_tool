@@ -6,10 +6,6 @@ import pydicom
 from pathlib import Path
 
 
-# TODO Add logging function
-# TODO Use Path properly
-
-
 # Other filepaths for testing
 # filepath = "/Users/ericpace/Desktop/Work/PHY1/PHY1.Seq12.Ser11.Img0.dcm"
 # filepath = get_testdata_files("rtplan.dcm")[0]
@@ -37,9 +33,8 @@ my_tags = anon.generate_tags(data_elements)
 
 if sourcepath.is_dir():
     for root, dirs, files in os.walk(sourcepath):
-        # TODO This currently does not traverse subdirs
-        for file_name in files:
-            anon.start(os.path.join(root, file_name), my_tags)
+        for file in files:
+            anon.start(os.path.join(root, file), my_tags)
 else:
     anon.start(args.source, my_tags)
 
