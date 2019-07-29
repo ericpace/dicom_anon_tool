@@ -31,3 +31,7 @@
 0040,A121	Date	?
 0040,A122	Time	?
 0040,A123	Person Name	Dummy
+0008,1062	Physician(s) Reading Study Identification Sequence	Dummy
+0010,1090	Medical Record Locator	Dummy
+0010,2180	Occupation	Dummy
+0010,4000	Patient Comments	Dummy
