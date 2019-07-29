@@ -37,7 +37,6 @@ my_tags = anon.generate_tags(data_elements)
 
 if sourcepath.is_dir():
     for root, dirs, files in os.walk(sourcepath):
-        print(f"Working in: {root}")
         # TODO This currently does not traverse subdirs
         for file_name in files:
             anon.start(os.path.join(root, file_name), my_tags)
