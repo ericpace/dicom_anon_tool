@@ -18,11 +18,11 @@ logging.basicConfig(filename=ANON_LOG_FILE,
 
 
 def generate_tags(user_list):
-    tags = {}
+    tags = []
     for line in user_list:
         line = Filter(*line.split("\t"))
         tag = Tag([int(x, 16) for x in line.id.split(",")])  # Convert hex to int and get Tag
-        tags[tag] = line.value
+        tags.append(Filter(tag, line.description, line.value))
     return tags
 
 
@@ -35,17 +35,17 @@ def load_dicom_file(filepath):
 
 
 def anonymise(ds, tags):
-    for tag in tags.keys():
+    for tag in tags:
         try:
-            value_cur = ds[tag].value
-            value_new = tags[tag]
+            value_cur = ds[tag.id].value
+            value_new = tag.value
 
-            logging.info(f"{tag}: Found (replacing {value_cur} with {value_new})")
-            ds[tag].value = value_new
+            logging.info(f"{tag.id} {tag.description}: \t Found (replacing {value_cur} with {value_new})")
+            ds[tag.id].value = value_new
         except KeyError:
-            logging.error(f"{tag}: Not found (KeyError)")
+            logging.error(f"{tag.id} {tag.description}: \t Not found (KeyError)")
         except AttributeError:
-            logging.error(f"{tag}: Not found (AttributeError)")
+            logging.error(f"{tag.id} {tag.description}: \t Not found (AttributeError)")
 
     return ds
 
@@ -63,4 +63,4 @@ def start(filepath, tags):
         savefile = os.path.join(f.parent, f"{f.stem}_anon.dcm")
         ds_anon.save_as(savefile)
         print(f"Save file: {savefile}")
-        logging.info(f"Saved file: {savefile}")
+        logging.info(f"Saved file: {savefile}\n\n")
