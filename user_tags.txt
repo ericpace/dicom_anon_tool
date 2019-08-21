@@ -1,7 +1,7 @@
-0008,0020	Study Date	19000101
-0008,0021	Series Date	19000101
-0008,0022	Acquisition Date	19000101
-0008,0023	Content Date	19000101
+0008,0020	Study Date	19000101    Date information
+0008,0021	Series Date	19000101    Date information
+0008,0022	Acquisition Date	19000101    Date information
+0008,0023	Content Date	19000101    Date information
 0008,0024	Overlay Date	19000101
 0008,0025	Curve Date	19000101
 0008,002A	Acquisition DateTime	19000101

@@ -7,7 +7,7 @@ import logging
 from datetime import datetime
 
 
-Filter = namedtuple('Filter', ['id', 'description', 'value'])
+Filter = namedtuple('Filter', ['id', 'description', 'value', 'long_desc'])
 
 ANON_LOG_FILE = f"{datetime.today().strftime('%Y-%m-%d_%H')}.log"
 logging.basicConfig(filename=ANON_LOG_FILE,
@@ -20,9 +20,10 @@ logging.basicConfig(filename=ANON_LOG_FILE,
 def generate_tags(user_list):
     tags = []
     for line in user_list:
-        line = Filter(*line.split("\t"))
+        # line = Filter(*line.split("\t"))
+        line = Filter(*line)
         tag = Tag([int(x, 16) for x in line.id.split(",")])  # Convert hex to int and get Tag
-        tags.append(Filter(tag, line.description, line.value))
+        tags.append(Filter(tag, line.description, line.value, line.long_desc))
     return tags
 
 
