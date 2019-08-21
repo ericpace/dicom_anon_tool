@@ -3,9 +3,7 @@
 import os
 import csv
 import argparse
-from collections import namedtuple
 import anonymiser as anon
-import pydicom
 from pathlib import Path
 
 
@@ -19,7 +17,6 @@ def main():
     args = parser.parse_args()
     sourcepath = Path(args.source)
 
-    Filter = namedtuple('Filter', ['id', 'description', 'value'])
 
     data_elements = []
     with open(args.tagfile) as csv_file:
