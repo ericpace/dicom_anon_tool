@@ -9,11 +9,6 @@ import pydicom
 from pathlib import Path
 
 
-# Other filepaths for testing
-# filepath = "/Users/ericpace/Desktop/Work/PHY1/PHY1.Seq12.Ser11.Img0.dcm"
-# filepath = get_testdata_files("rtplan.dcm")[0]
-# filepath = "test_anon.dcm"
-
 def main():
     parser = argparse.ArgumentParser(description='Anonymise DICOM images')
     parser.add_argument('source', type=str,
@@ -25,10 +20,6 @@ def main():
     sourcepath = Path(args.source)
 
     Filter = namedtuple('Filter', ['id', 'description', 'value'])
-
-    # with open(args.tagfile) as f:
-    #     # Read each line
-    #     data_elements = f.read().splitlines()
 
     data_elements = []
     with open(args.tagfile) as csv_file:
@@ -45,4 +36,7 @@ def main():
     else:
         anon.start(args.source, my_tags)
 
-print('finished')
+
+if __name__ == '__main__':
+    main()
+    print('finished')
