@@ -9,7 +9,9 @@ from datetime import datetime
 
 Filter = namedtuple('Filter', ['id', 'description', 'value', 'long_desc'])
 
-ANON_LOG_FILE = f"{datetime.today().strftime('%Y-%m-%d_%H')}.log"
+now = datetime.today().strftime('%Y-%m-%d_%H')
+ANON_LOG_FILE = f"{now}.log"
+
 logging.basicConfig(filename=ANON_LOG_FILE,
                     filemode='a',
                     format='%(asctime)s %(levelname)s \t %(message)s',
@@ -34,7 +36,14 @@ def load_dicom_file(filepath):
         return None
 
 
-def anonymise(ds, tags):
+def save_dicom_file(ds, savepath):
+    savepath.parent.mkdir(parents=True, exist_ok=True)
+    ds.save_as(str(savepath))
+    print(f"Save file: {savepath}")
+    logging.info(f"Saved file: {savepath}\n\n")
+
+
+def scrub_tags(ds, tags):
     for tag in tags:
         try:
             value_cur = ds[tag.id].value
@@ -50,17 +59,15 @@ def anonymise(ds, tags):
     return ds
 
 
-def start(filepath, tags):
-    f = Path(filepath)
-    ds = load_dicom_file(filepath)
+def anonymise_file(source_filepath, dest_filepath, tags):
+    f = Path(source_filepath)
+    ds = load_dicom_file(source_filepath)
 
     if ds:
         print(f"Open file: {f}")
         logging.info(f"Opened file: {f}")
-        ds_anon = anonymise(ds, tags)
+        ds_anon = scrub_tags(ds, tags)
 
         # TODO handle better
-        savefile = os.path.join(f.parent, f"{f.stem}_anon.dcm")
-        ds_anon.save_as(savefile)
-        print(f"Save file: {savefile}")
-        logging.info(f"Saved file: {savefile}\n\n")
+        # savefile = os.path.join(f.parent, f"{f.stem}_anon.dcm")
+        save_dicom_file(ds_anon, dest_filepath)
