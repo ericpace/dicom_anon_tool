@@ -20,3 +20,8 @@ optional arguments:
   -i, --intact          Leave filenames unchanged
 ```
 
+## Usage example
+
+```
+main.py /Users/me//dcm/original/ /Users/me/Desktop/anonymised/ -t "user_tags.csv" -i
+```
