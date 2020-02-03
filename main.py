@@ -6,20 +6,37 @@ import argparse
 import anonymiser as anon
 from pathlib import Path
 
+from gooey import Gooey, GooeyParser
 
 
+@Gooey(program_name='DICOM Anonymiser',
+       required_cols=1,
+       optional_cols=1,
+       default_size=(610, 630))
 def parse_args():
-    parser = argparse.ArgumentParser(description='Anonymise DICOM images')
-    parser.add_argument('source', type=str,
+    # parser = argparse.ArgumentParser(description='Anonymise DICOM images')
+
+    parser = GooeyParser(description='Anonymise DICOM images')
+
+    parser.add_argument('source', type=str, metavar="Source",
+                        widget="DirChooser",
                         help='location of dicom file or folder to anonymise')
-    parser.add_argument('destination', type=str,
+
+    parser.add_argument('destination', type=str, metavar="Destination",
+                        widget="DirChooser",
                         help='Destination folder to save anonymised images')
-    parser.add_argument('-t', '--tagfile', default="user_tags.csv",
+
+    parser.add_argument('-t', '--tagfile', default="user_tags.csv", metavar="Tag file",
+                        widget="FileChooser",
                         help='path to custom tags file')
-    parser.add_argument('-i', '--intact', action="store_true",
+
+    parser.add_argument('-i', '--intact', action="store_true", metavar="Intact",
                         help='Leave filenames unchanged')
 
+
+
     args = parser.parse_args()
+
     args.tagfile = Path(args.tagfile)
     args.source = Path(args.source)
     args.destination = Path(args.destination)
@@ -68,9 +85,9 @@ def main():
     if args.source.is_dir():
         for root, dirs, files in os.walk(args.source):
             for file in files:
-                file = file_rename(file, args.intact)
                 source_filepath = Path(root) / file
-                dest_filepath = get_dest_filepath(source_filepath, args.source, args.destination)
+                dest_filename = file_rename(file, args.intact)
+                dest_filepath = get_dest_filepath(Path(root) / dest_filename, args.source, args.destination)
                 anon.anonymise_file(source_filepath, dest_filepath, my_tags)
     else:
         file = file_rename(args.source.name, args.intact)
@@ -80,7 +97,7 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print('finished')
+    print('Finished')
 
 
 

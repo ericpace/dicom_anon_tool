@@ -7,6 +7,8 @@ import logging
 from datetime import datetime
 
 
+
+
 Filter = namedtuple('Filter', ['id', 'description', 'value', 'long_desc'])
 
 now = datetime.today().strftime('%Y-%m-%d_%H')
@@ -17,6 +19,7 @@ logging.basicConfig(filename=ANON_LOG_FILE,
                     format='%(asctime)s %(levelname)s \t %(message)s',
                     datefmt='%H:%M:%S',
                     level=logging.INFO)
+
 
 
 def generate_tags(user_list):
@@ -39,8 +42,8 @@ def load_dicom_file(filepath):
 def save_dicom_file(ds, savepath):
     savepath.parent.mkdir(parents=True, exist_ok=True)
     ds.save_as(str(savepath))
-    print(f"Save file: {savepath}")
-    logging.info(f"Saved file: {savepath}\n\n")
+    print(f"Saving: {savepath}\n")
+    logging.info(f"Saving: {savepath}\n\n")
 
 
 def scrub_tags(ds, tags):
@@ -64,8 +67,8 @@ def anonymise_file(source_filepath, dest_filepath, tags):
     ds = load_dicom_file(source_filepath)
 
     if ds:
-        print(f"Open file: {f}")
-        logging.info(f"Opened file: {f}")
+        print(f"Opening: {f}")
+        logging.info(f"Opening: {f}")
         ds_anon = scrub_tags(ds, tags)
 
         # TODO handle better
