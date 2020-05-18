@@ -21,7 +21,6 @@ logging.basicConfig(filename=ANON_LOG_FILE,
                     level=logging.INFO)
 
 
-
 def generate_tags(user_list):
     tags = []
     for line in user_list:
@@ -58,6 +57,10 @@ def scrub_tags(ds, tags):
             logging.error(f"{tag.id} {tag.description}: \t Not found (KeyError)")
         except AttributeError:
             logging.error(f"{tag.id} {tag.description}: \t Not found (AttributeError)")
+        except TypeError:
+            logging.error(f"{tag.id} {tag.description}: \t Not found (TypeError)")
+        except:
+            logging.error(f"{tag.id} {tag.description}: \t Unexpected error")
 
     return ds
 
