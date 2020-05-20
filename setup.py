@@ -16,6 +16,7 @@ setuptools.setup(
     long_description='dicom_anonymiser anonymises dicom files and folders with user customisable tags.',
     url='https://github.com/ericpace/dicom_anon_tool',
     packages=setuptools.find_packages(),
+    include_package_data=True,
     entry_points={'gui_scripts': ['anon=dicom_anonymiser.__main__:main']},
     python_requires=">=3.5",
     # Enable install requires when publishing on the normal PyPi
