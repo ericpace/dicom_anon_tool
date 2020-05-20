@@ -25,7 +25,47 @@ optional arguments:
   -i, --intact          Leave filenames unchanged
 ```
 
-## Usage example
+
+## Installation
+
+1. Install python3.7+
+2. Create a virtual env where you want to install:
+
+    ```
+    $> python3 -m venv dicom_anonymiser
+    ```
+
+3. Activate the environment
+
+    ```
+    $> source dicom_anonymiser/bin/activate
+    ```
+
+4. Install the package with pip
+
+     ```
+    $> pip install dicom_anonymiser
+     ```
+
+5. Having the environment activated, simply run from the terminal with
+
+     ```
+     $> anon
+     ```
+
+6. Each anonymisation run will generate a log file placed in the environment package directory:
+
+     ```
+     dicom_anonymiser/lib/python3.x/site-packages/dicom_anonymiser/logs/
+     ```
+     
+7. Default location of tags file
+     
+     ```
+     dicom_anonymiser/lib/python3.x/site-packages/dicom_anonymiser/tags/
+     ```    
+     
+## Usage example for cli
 
 To anonymise all DICOM files within directory named `original` and place output to 
 a folder named `anonymised` using custom user tags and preserving the original filename
@@ -33,3 +73,7 @@ a folder named `anonymised` using custom user tags and preserving the original f
 ```
 main.py /Users/me/dcm/original/ /Users/me/Desktop/anonymised/ -t "user_tags.csv" -i
 ```
+
+
+
+

@@ -12,7 +12,7 @@ setuptools.setup(
     name='dicom_anonymiser',
     license="GNU GPLv3",
     description='dicom_anonymiser anonymises dicom files and folders with user customisable tags.',
-    version='v0.1.04',
+    version='v0.1',
     long_description='dicom_anonymiser anonymises dicom files and folders with user customisable tags.',
     url='https://github.com/ericpace/dicom_anon_tool',
     packages=setuptools.find_packages(),
