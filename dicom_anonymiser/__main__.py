@@ -9,6 +9,11 @@ from pathlib import Path
 from gooey import Gooey, GooeyParser
 
 
+root = Path(os.path.abspath(__file__)).parent.parent
+tagpath = root / 'tags'
+default_tagfile = tagpath / 'default_tags.csv'
+default_tagfile_text = str(default_tagfile)
+
 @Gooey(program_name='DICOM Anonymiser',
        required_cols=1,
        optional_cols=1,
@@ -26,7 +31,7 @@ def parse_args():
                         widget="DirChooser",
                         help='Destination folder to save anonymised images')
 
-    parser.add_argument('-t', '--tagfile', default="user_tags.csv", metavar="Tag file",
+    parser.add_argument('-t', '--tagfile', default=default_tagfile_text, metavar="Tag file",
                         widget="FileChooser",
                         help='path to custom tags file')
 
@@ -97,7 +102,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    print('Finished')
-
-
-

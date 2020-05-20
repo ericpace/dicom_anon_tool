@@ -10,8 +10,10 @@ from datetime import datetime
 
 Filter = namedtuple('Filter', ['id', 'description', 'value', 'long_desc'])
 
-now = datetime.today().strftime('%Y-%m-%d_%H')
-logpath = Path('../logs')
+now = datetime.today().strftime('%Y-%m-%d-%H-%M-%S')
+
+root = Path(os.path.abspath(__file__)).parent.parent
+logpath = root / 'logs'
 ANON_LOG_FILE = logpath / f"{now}.log"
 
 logging.basicConfig(filename=ANON_LOG_FILE,

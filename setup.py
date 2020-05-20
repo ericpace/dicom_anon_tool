@@ -11,14 +11,16 @@ setuptools.setup(
     author_email="ericpace@pm.me",
     name='dicom_anonymiser',
     license="GNU GPLv3",
-    description='dicom_anonymiser anonymised dicom files in bulk with user customisable tags.',
-    version='v0.1',
-    long_description=README,
+    description='dicom_anonymiser anonymises dicom files with user customisable tags.',
+    version='v0.1.03',
+    long_description='dicom_anonymiser anonymises dicom files with user customisable tags.',
     url='https://github.com/ericpace/dicom_anon_tool',
     packages=setuptools.find_packages(),
+    entry_points={'gui_scripts': ['anon=dicom_anonymiser.__main__:main']},
     python_requires=">=3.5",
+    # Enable install requires when publishing on the normal PyPi
     install_requires=[
-        'gooey',
+        'Gooey',
         'pydicom'],
     classifiers=[
         'Development Status :: 4 - Beta',
