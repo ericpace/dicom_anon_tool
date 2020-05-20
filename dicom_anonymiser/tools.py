@@ -12,9 +12,13 @@ Filter = namedtuple('Filter', ['id', 'description', 'value', 'long_desc'])
 
 now = datetime.today().strftime('%Y-%m-%d-%H-%M-%S')
 
-root = Path(os.path.abspath(__file__)).parent.parent
+root = Path(os.path.abspath(__file__)).parent
 logpath = root / 'logs'
 ANON_LOG_FILE = logpath / f"{now}.log"
+
+
+if not os.path.exists(logpath):
+    os.makedirs(logpath)
 
 logging.basicConfig(filename=ANON_LOG_FILE,
                     filemode='a',

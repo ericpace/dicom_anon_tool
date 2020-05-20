@@ -9,7 +9,7 @@ from pathlib import Path
 from gooey import Gooey, GooeyParser
 
 
-root = Path(os.path.abspath(__file__)).parent.parent
+root = Path(os.path.abspath(__file__)).parent
 tagpath = root / 'tags'
 default_tagfile = tagpath / 'default_tags.csv'
 default_tagfile_text = str(default_tagfile)
